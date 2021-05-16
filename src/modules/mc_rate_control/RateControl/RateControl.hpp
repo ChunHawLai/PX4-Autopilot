@@ -57,7 +57,12 @@ public:
 	 * @param I 3D vector of integral gains
 	 * @param D 3D vector of derivative gains
 	 */
-	void setGains(const matrix::Vector3f &P, const matrix::Vector3f &I, const matrix::Vector3f &D);
+	// Default PID
+	// void setGains(const matrix::Vector3f &P, const matrix::Vector3f &I, const matrix::Vector3f &D);
+	
+	// SIPIC
+	void setGains(const matrix::Vector3f &P, const matrix::Vector3f &I, const matrix::Vector3f &D, 
+		      const matrix::Vector3f &K1, const matrix::Vector3f &K2);
 
 	/**
 	 * Set the mximum absolute value of the integrator for all axes
@@ -109,7 +114,10 @@ private:
 	matrix::Vector3f _gain_d; ///< rate control derivative gain
 	matrix::Vector3f _lim_int; ///< integrator term maximum absolute value
 	matrix::Vector3f _gain_ff; ///< direct rate to torque feed forward gain only useful for helicopters
-
+	matrix::Vector3f _gain_K1; // SIPIC
+	matrix::Vector3f _gain_K2; // SIPIC
+	matrix::Vector3f _gain_Ku; // inverse dynamics for SIPIC
+	
 	// States
 	matrix::Vector3f _rate_int; ///< integral term of the rate controller
 
