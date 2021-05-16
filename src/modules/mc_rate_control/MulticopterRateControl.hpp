@@ -139,6 +139,7 @@ private:
 		(ParamFloat<px4::params::MC_ROLLRATE_D>) _param_mc_rollrate_d,
 		(ParamFloat<px4::params::MC_ROLLRATE_FF>) _param_mc_rollrate_ff,
 		(ParamFloat<px4::params::MC_ROLLRATE_K>) _param_mc_rollrate_k,
+		(ParamFloat<px4::params::MC_ROLLRATE_JM>) _param_mc_rollrate_jm,	// SIPIC
 
 		(ParamFloat<px4::params::MC_PITCHRATE_P>) _param_mc_pitchrate_p,
 		(ParamFloat<px4::params::MC_PITCHRATE_I>) _param_mc_pitchrate_i,
@@ -146,6 +147,7 @@ private:
 		(ParamFloat<px4::params::MC_PITCHRATE_D>) _param_mc_pitchrate_d,
 		(ParamFloat<px4::params::MC_PITCHRATE_FF>) _param_mc_pitchrate_ff,
 		(ParamFloat<px4::params::MC_PITCHRATE_K>) _param_mc_pitchrate_k,
+		(ParamFloat<px4::params::MC_PITCHRATE_JM>) _param_mc_pitchrate_jm,	// SIPIC
 
 		(ParamFloat<px4::params::MC_YAWRATE_P>) _param_mc_yawrate_p,
 		(ParamFloat<px4::params::MC_YAWRATE_I>) _param_mc_yawrate_i,
@@ -153,6 +155,7 @@ private:
 		(ParamFloat<px4::params::MC_YAWRATE_D>) _param_mc_yawrate_d,
 		(ParamFloat<px4::params::MC_YAWRATE_FF>) _param_mc_yawrate_ff,
 		(ParamFloat<px4::params::MC_YAWRATE_K>) _param_mc_yawrate_k,
+		(ParamFloat<px4::params::MC_YAWRATE_JM>) _param_mc_yawrate_jm,		// SIPIC
 
 		(ParamFloat<px4::params::MPC_MAN_Y_MAX>) _param_mpc_man_y_max,			/**< scaling factor from stick to yaw rate */
 
