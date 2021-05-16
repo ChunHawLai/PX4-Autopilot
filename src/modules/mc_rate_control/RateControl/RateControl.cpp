@@ -45,6 +45,8 @@ void RateControl::setGains(const Vector3f &P, const Vector3f &I, const Vector3f 
 	_gain_p = P;
 	_gain_i = I;
 	_gain_d = D;
+	_gain_K1 = _gain_p * _gain_i;
+	_gain_K2 = _gain_i; // Multiplied with Jm in MulticopterRateControl.cpp
 }
 
 void RateControl::setSaturationStatus(const MultirotorMixer::saturation_status &status)
@@ -64,7 +66,14 @@ Vector3f RateControl::update(const Vector3f &rate, const Vector3f &rate_sp, cons
 	Vector3f rate_error = rate_sp - rate;
 
 	// PID control with feed forward
-	const Vector3f torque = _gain_p.emult(rate_error) + _rate_int - _gain_d.emult(angular_accel) + _gain_ff.emult(rate_sp);
+	// const Vector3f torque = _gain_p.emult(rate_error) + _rate_int - _gain_d.emult(angular_accel) + _gain_ff.emult(rate_sp);
+	
+	// SIPIC
+	// _gain_Ku = Vector3f(1/2/Cfr/1000/xr, 1/2/Cfp/1000/xp, 1/2/Cfy/1000)
+	_gain_Ku = Vector3f(1/2/0.02156/1000/0.42, 1/2/0.02156/1000/0.42, 1/2/0.003028/1000);
+		
+	const Vector3f torque = _gain_Ku.emult(_gain_p.emult(rate_error) + _rate_int - _gain_K2.emult(rate) -
+				_gain_d.emult(angular_accel));		
 
 	// update integral only if we are not landed
 	if (!landed) {
@@ -97,8 +106,12 @@ void RateControl::updateIntegral(Vector3f &rate_error, const float dt)
 		i_factor = math::max(0.0f, 1.f - i_factor * i_factor);
 
 		// Perform the integration using a first order method
-		float rate_i = _rate_int(i) + i_factor * _gain_i(i) * rate_error(i) * dt;
-
+		// PID
+		// float rate_i = _rate_int(i) + i_factor * _gain_i(i) * rate_error(i) * dt;
+		
+		// SIPIC
+		float rate_i = _rate_int(i) + i_factor * _gain_K1(i) * rate_error(i) * dt;
+		
 		// do not propagate the result if out of range or invalid
 		if (PX4_ISFINITE(rate_i)) {
 			_rate_int(i) = math::constrain(rate_i, -_lim_int(i), _lim_int(i));
