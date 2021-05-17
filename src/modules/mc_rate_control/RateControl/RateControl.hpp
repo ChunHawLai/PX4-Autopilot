@@ -62,7 +62,7 @@ public:
 	
 	// SIPIC
 	void setGains(const matrix::Vector3f &P, const matrix::Vector3f &I, const matrix::Vector3f &D, 
-		      const matrix::Vector3f &K1, const matrix::Vector3f &K2);
+		      const matrix::Vector3f &K1, const matrix::Vector3f &K2, const matrix::Vector3f &Jm);
 
 	/**
 	 * Set the mximum absolute value of the integrator for all axes
@@ -117,7 +117,8 @@ private:
 	matrix::Vector3f _gain_K1; // SIPIC
 	matrix::Vector3f _gain_K2; // SIPIC
 	matrix::Vector3f _gain_Ku; // inverse dynamics for SIPIC
-	
+	matrix::Vector3f _gain_Jm // Measured moment of inertia
+		
 	// States
 	matrix::Vector3f _rate_int; ///< integral term of the rate controller
 
