@@ -40,13 +40,13 @@
 
 using namespace matrix;
 
-void RateControl::setGains(const Vector3f &P, const Vector3f &I, const Vector3f &D, const Vector3f &K1, const Vector3f &K2)
+void RateControl::setGains(const Vector3f &P, const Vector3f &I, const Vector3f &D, const Vector3f &K1, const Vector3f &K2, const Vector3f &Jm)
 {
 	_gain_p = P;
 	_gain_i = I;
 	_gain_d = D;
 	_gain_K1 = _gain_p.emult(_gain_i);
-	_gain_K2 = _gain_i; 
+	_gain_K2 = _gain_i.emult(_gain_Jm); // Jm from MulticopterRateControl.cpp
 }
 
 void RateControl::setSaturationStatus(const MultirotorMixer::saturation_status &status)
