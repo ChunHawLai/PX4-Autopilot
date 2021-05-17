@@ -84,6 +84,10 @@ MulticopterRateControl::parameters_updated()
 		rate_k.emult(Vector3f(_param_mc_rollrate_i.get(), _param_mc_pitchrate_i.get(), _param_mc_yawrate_i.get())),
 		rate_k.emult(Vector3f(_param_mc_rollrate_d.get(), _param_mc_pitchrate_d.get(), _param_mc_yawrate_d.get())));
 	
+	// SIPIC Jm
+	_rate_control.setGains(
+		Vector3f(_param_mc_rollrate_Jm.get(), _param_mc_pitchrate_Jm.get(), _param_mc_yawrate_Jm.get()));
+	
 	_rate_control.setIntegratorLimit(
 		Vector3f(_param_mc_rr_int_lim.get(), _param_mc_pr_int_lim.get(), _param_mc_yr_int_lim.get()));
 
